@@ -93,7 +93,9 @@ class AiSupportService
             $results = $qry->pluck('content')->toArray();
         } catch (Exception $e) {
             Log::error(' Error ' . $e->getMessage());
-            return 'error';
+//            return 'error';
+            return [];   // 👈 return empty array instead of "error"
+
         }
 
         return $results;
@@ -145,7 +147,7 @@ class AiSupportService
             throw new Exception('Gemini API Key is not configured.');
         }
 
-        $model  = 'gemini-1.5-flash';
+        $model  = 'gemini-2.5-flash';
         $url    = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}";
 
         $prompt = $this->buildCustomerSupportPrompt($question, $context);
